@@ -1,0 +1,73 @@
+.navigation {
+    display: grid;
+    grid-template-columns: repeat(6, 200px);
+    margin-left: 420px;
+    margin-right: 420px;
+    font-size: 20px;
+    background-color: rgb(23, 23, 23)
+}
+
+.gallery-title-button {
+    display: grid;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 260px);
+    grid-template-rows: repeat(2, 210px);
+    gap: 2px;
+}
+
+.gallery-item {
+    padding: 4px;
+}
+
+#gallery-section {
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(179, 179, 179);
+    padding: 0.5rem;
+    margin-right: 420px;
+    margin-left: 420px;
+}
+
+.title {
+    background-color: rgb(23, 23, 23);
+    color: rgb(179, 179, 179);
+    margin-left: 420px;
+    margin-right: 420px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+
+}
+
+a {
+    color: rgb(179, 179, 179);
+}
+
+body {
+    background-color: rgb(50, 50, 50);
+}
+
+.h2 {
+    color: rgb(179, 179, 179);
+    margin-top: 50px;
+    margin-left: 420px;
+    font-size: 25px;
+}
+
+.p1h2 {
+    color: rgb(179, 179, 179);
+    font-size: large;
+    margin-right: 420px;
+    margin-left: 420px;
+}
+
+.h3 {
+    color: rgb(179, 179, 179);
+    margin-top: 50px;
+    margin-left: 420px;
+    font-size: 25px;
+    padding: 2px;
+}
+
