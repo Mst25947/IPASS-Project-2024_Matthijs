@@ -1,5 +1,4 @@
 package org.Model;
-import java.util.Date;
 
 public class Car {
     private String brand;
@@ -18,6 +17,28 @@ public class Car {
         this.rearBumper = rearBumper;
         this.sideSkirt = sideSkirt;
         this.spoiler = spoiler;
+    }
+
+    public String getCarBrand() {
+        return brand;
+    }
+    public String getType(){
+        return type;
+    }
+    public boolean getFrontBumper(){
+        return frontBumper;
+    }
+
+    public boolean getRearBumper(){
+        return rearBumper;
+    }
+
+    public boolean getSideSkirt(){
+        return sideSkirt;
+    }
+
+    public boolean getSpoiler(){
+        return spoiler;
     }
 }
 
