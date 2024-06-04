@@ -1,4 +1,4 @@
-package org.example;
+package org.Model;
 import java.util.ArrayList;
 
 public class Product {

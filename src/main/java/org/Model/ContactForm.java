@@ -1,4 +1,4 @@
-package org.example;
+package org.Model;
 public class ContactForm {
     private String naam;
     private String email;

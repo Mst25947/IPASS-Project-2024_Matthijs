@@ -1,4 +1,4 @@
-package org.example;
+package org.Model;
 public class Customer {
     private String name;
     private String adress;
