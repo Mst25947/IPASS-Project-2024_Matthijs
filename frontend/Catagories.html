@@ -3,21 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
-    <link rel="stylesheet" href="Styles.css">
-    
+    <title>Car Details</title>
 </head>
-<body class="body">
-    <main>
-        <h1 class="title">A.B.S. Auto-body-styling</h1>
-        <nav class="navigation">
-            <a href="./Index.html">Home</a> 
-            <a href="./SelectCar.html">Select your car</a> 
-            <a href="./Catagories.html">Categories</a> 
-            <a href="./Contact.html">Contact</a> 
-            <a href="./About-us.html">About Us</a> 
-            <a href="./Account.html">Account</a> 
-        </nav>
-    </main>
+<body>
+    <h1>Fetch Car Details</h1>
+    <input type="text" id="carModel" placeholder="Enter car model">
+    <button onclick="fetchCarDetails()">Get Car Details</button>
+
+    <div id="carDetails"></div>
+
+    <script>
+        async function fetchCarDetails() {
+            const model = document.getElementById('carModel').value;
+            const url = `http://localhost:8080/yourapp/cars/${model}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const car = await response.json();
+                displayCarDetails(car);
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+                document.getElementById('carDetails').innerText = 'Error fetching car details';
+            }
+        }
+
+        function displayCarDetails(car) {
+            const carDetails = document.getElementById('carDetails');
+            if (car.error) {
+                carDetails.innerHTML = `<p>${car.error}</p>`;
+            } else {
+                carDetails.innerHTML = `
+                    <p>Brand: ${car.brand}</p>
+                    <p>Type: ${car.type}</p>
+                    <p>Color: ${car.color}</p>
+                    <p>Front Bumper: ${car.frontBumper}</p>
+                    <p>Rear Bumper: ${car.rearBumper}</p>
+                    <p>Side Skirt: ${car.sideSkirt}</p>
+                    <p>Spoiler: ${car.spoiler}</p>
+                `;
+            }
+        }
+    </script>
 </body>
 </html>
