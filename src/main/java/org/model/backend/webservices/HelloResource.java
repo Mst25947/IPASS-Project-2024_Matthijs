@@ -1,4 +1,4 @@
-package org.Model;
+package org.model.backend.webservices;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -1,5 +1,7 @@
-package org.Model;
+package org.model;
 
+import org.model.backend.model.Order;
+import org.model.backend.model.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package org.Model;
+package org.model.backend.model;
 public class Customer {
     private String name;
     private String adress;
