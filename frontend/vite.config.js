@@ -5,10 +5,11 @@ export default defineConfig({
         sourcemap: true,
         rollupOptions: {
             input: {
-                main: resolve(__dirname, 'index.html')
+                main: resolve(__dirname, 'Index.html')
 // to add more html pages....see FEP1 boilerplate section build&deploy
         },
     },
-    outDir: "../src/main/webapp/"
+    outDir: "../src/main/webapp/",
+    emptyOutDir: true,
 },
 })
