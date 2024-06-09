@@ -16,7 +16,6 @@ public class CarResource {
     public String getCarDetails(@PathParam("model") String model) {
         JsonObjectBuilder job = Json.createObjectBuilder();
 
-        // Mock data - Replace with your actual data retrieval logic
         if (model.equals("ST23")) {
             job.add("brand", "Toyota");
             job.add("type", "ST23");
