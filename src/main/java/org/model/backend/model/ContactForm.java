@@ -1,14 +1,32 @@
 package org.model.backend.model;
+
 public class ContactForm {
-    private String naam;
+    private String name;
     private String email;
-    private String phone;
     private String message;
 
-    public ContactForm(String naam, String email, String phone, String message){
-        this.naam = naam;
+    // Getters and setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
-        this.phone = phone;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
         this.message = message;
     }
 }
