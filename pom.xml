@@ -73,6 +73,21 @@
       <artifactId>google-collections</artifactId>
       <version>1.0</version>
     </dependency>
+    <dependency>
+      <groupId>nl.hu.bep.shopping</groupId>
+      <artifactId>BigShopper</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+      <version>0.9.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.domain-model</groupId>
+      <artifactId>domain-model</artifactId>
+      <version>0.0.0</version>
+    </dependency>
 
     <!-- <dependency>
         <groupId>io.jsonwebtoken</groupId>

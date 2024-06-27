@@ -7,7 +7,7 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("restservices")
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
-        packages("org.model.backend.webservices");
+        packages("org.model.backend.webservices, org.model.backend.security");
     }
 }
 

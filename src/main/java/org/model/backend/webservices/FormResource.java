@@ -29,7 +29,6 @@ public class FormResource {
         String filePath = "form_data.json";
 
         try (FileWriter file = new FileWriter(filePath, true)) {
-            // Ensure JSON array structure
             if (Files.size(Paths.get(filePath)) == 0) {
                 file.write("[\n");
             } else {
@@ -44,7 +43,6 @@ public class FormResource {
                     .entity("Error saving form data").build();
         }
 
-        // Build JSON response
         JsonObject jsonResponse = new JsonObject();
         jsonResponse.addProperty("message", "Form submitted successfully");
 
