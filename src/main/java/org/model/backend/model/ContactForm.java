@@ -5,7 +5,6 @@ public class ContactForm {
     private String email;
     private String message;
 
-    // Getters and setters
     public String getName() {
         return name;
     }
