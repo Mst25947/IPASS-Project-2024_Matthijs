@@ -50,11 +50,14 @@
 
             function login(){
                 let formData = new FormData(document.querySelector("#loginForm"));
-                let JsonRequestBody = {}
-                formData.forEach((key, value) => JsonRequestBody[key] = value);
+                let JsonRequestBody = {};
+                formData.forEach((value, key) => { JsonRequestBody[key] = value; });
                 fetch('http://localhost:8080/restservices/authentication', {
                     method: 'POST',
-                    body: JsonRequestBody
+                    body: JSON.stringify(JsonRequestBody),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }).then(function (response){
                     if (response.ok) return response.json();
                     else throw "Wrong username/password";
@@ -63,7 +66,7 @@
                 .catch(error => console.log(error));
             }
 
-            document.querySelector('button[type="login"]').addEventListener("click", login);
+            document.querySelector('button[type="button"]').addEventListener("click", login);
         });
     </script>
   <link rel="stylesheet" crossorigin href="/assets/Styles-QIhmFf95.css">
@@ -72,12 +75,12 @@
     <main>
         <h1 class="title">A.B.S. Auto-body-styling</h1>
         <nav class="navigation">
-            <a href="./index.html">Home</a> 
-            <a href="./selectCar.html">Select your car</a> 
-            <a href="./catagories.html">Categories</a> 
-            <a href="./contact.html">Contact</a> 
-            <a href="./about-us.html">About Us</a> 
-            <a href="./account.html">Account</a> 
+            <a href="./index.html">Home</a>
+            <a href="./selectCar.html">Select your car</a>
+            <a href="./categories.html">Categories</a>
+            <a href="./contact.html">Contact</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./account.html">Account</a>
         </nav>
         <h2 class="h2">Fill in the contact form:</h2>
         <form id="loginForm">
@@ -87,7 +90,7 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" autocomplete="current-password" required>
             <br>
-            <button type="button" onclick="login()">Log in</button>
+            <button type="button">Log in</button>
         </form>
         <h3 class="h3">Gallery</h3>
         <section id="gallery-section">

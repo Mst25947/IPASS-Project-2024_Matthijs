@@ -17,30 +17,32 @@ import javax.ws.rs.ext.Provider;
 public class AuthenticationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestCtx) {
-
-        boolean isSecure = requestCtx.getSecurityContext().isSecure();
-        String scheme = requestCtx.getUriInfo().getRequestUri().getScheme();
-        // Users are treated as guests, unless a valid JWT is provided
-        MySecurityContext msc = new MySecurityContext(null, scheme);
         String authHeader = requestCtx.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-
             String token = authHeader.substring("Bearer".length()).trim();
 
             try {
-                // Validate the token
                 JwtParser parser = Jwts.parser().setSigningKey(AuthenticationResource.key);
                 Claims claims = parser.parseClaimsJws(token).getBody();
 
-                String user = claims.getSubject();
-                msc = new MySecurityContext(MyUser.getUserByUsername(user), scheme);
+                String username = claims.getSubject();
+                String role = (String) claims.get("role");
 
+                // Create security context with user and role
+                MyUser user = MyUser.getUserByUsername(username);
+                MySecurityContext msc = new MySecurityContext(user, requestCtx.getUriInfo().getRequestUri().getScheme());
+
+                requestCtx.setSecurityContext(msc);
+                return;
             } catch (JwtException | IllegalArgumentException e) {
+                // Handle invalid token
                 e.printStackTrace();
-                System.out.println("Invalid JWT, processing as guest!");
+                System.out.println("Invalid JWT token");
             }
         }
 
+        // If no valid token found or validation failed, set as guest
+        MySecurityContext msc = new MySecurityContext(null, requestCtx.getUriInfo().getRequestUri().getScheme());
         requestCtx.setSecurityContext(msc);
     }
 }

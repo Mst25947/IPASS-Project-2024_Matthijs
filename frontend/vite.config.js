@@ -8,9 +8,8 @@ export default defineConfig({
                 main: resolve(__dirname, 'index.html'),
                 selectCar: resolve(__dirname, './selectCar.html'),
                 toyota: resolve(__dirname, './toyota.html'),
-                celicaST20: resolve(__dirname, './celica-ST20.html'),
                 contact: resolve(__dirname, './contact.html'),
-                catagories: resolve(__dirname, './catagories.html'),
+                catagories: resolve(__dirname, './categories.html'),
                 aboutUs: resolve(__dirname, './about-us.html'),
                 account: resolve(__dirname, './account.html')
 
