@@ -1,8 +1,10 @@
 package org.model.backend.model;
+
 import java.util.ArrayList;
 
 public class Product {
-    public static ArrayList<Product> allProducts = new ArrayList<Product>();
+    public static ArrayList<Product> allProducts = new ArrayList<>();
+
     private String productName;
     private String description;
     private int price;
@@ -15,7 +17,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.color = color;
-        this.productType = productType; // product type would be: front bumper, sideskirt, spoiler etc.
+        this.productType = productType;
         this.carModel = carModel;
         allProducts.add(this);
     }
@@ -44,5 +46,3 @@ public class Product {
         return carModel;
     }
 }
-
-

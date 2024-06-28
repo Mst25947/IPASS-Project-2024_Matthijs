@@ -11,6 +11,7 @@ export default defineConfig({
                 contact: resolve(__dirname, './contact.html'),
                 catagories: resolve(__dirname, './categories.html'),
                 aboutUs: resolve(__dirname, './about-us.html'),
+                products: resolve(__dirname, './products.html'),
                 account: resolve(__dirname, './account.html')
 
 // to add more html pages....see FEP1 boilerplate section build&deploy

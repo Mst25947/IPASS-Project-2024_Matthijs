@@ -18,8 +18,8 @@ public class CarResource {
     static {
         // Simulated database or service
         carsDatabase.put("Celica T23", new Car("Toyota", "Celica T23", "Red", true, true, true, true, true, false, false));
-        carsDatabase.put("Celica ST20", new Car("Toyota", "Celica ST20", "Blue", true, true, false, true, false, false, true));
-        carsDatabase.put("Celica ST18", new Car("Toyota", "Celica ST18", "Black", true, true, true, false, false, false, false));
+        carsDatabase.put("Celica ST20", new Car("Toyota", "Celica ST20", "Blue", true, true, true, true, false, true, true));
+        carsDatabase.put("Celica ST18", new Car("Toyota", "Celica ST18", "Black", true, true, true, false, true, false, false));
         carsDatabase.put("GT-86", new Car("Toyota", "GT-86", "Yellow", true, true, false, true, true, true, true));
     }
 
