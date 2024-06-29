@@ -12,6 +12,9 @@ public class Product {
     private String productType;
     private String carModel;
 
+    public Product() {
+    }
+
     public Product(String productName, String description, int price, String color, String productType, String carModel) {
         this.productName = productName;
         this.description = description;

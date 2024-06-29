@@ -34,4 +34,6 @@ public class ProductResource {
 
         return Response.ok(filteredProducts).build();
     }
+
+
 }
