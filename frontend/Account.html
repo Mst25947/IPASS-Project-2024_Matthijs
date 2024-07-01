@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account</title>
     <link rel="stylesheet" href="Styles.css">
+
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
+        function getRandomImageUrl() {
             const imageUrls = [
                 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                 'https://via.placeholder.com/200/0000FF',
@@ -35,62 +37,150 @@
                 'http://www.celicahobby.com/ubbthreads/attach/1953333175-whitecelicaggames.jpg',
                 'https://images.customwheeloffset.com/web-compressed/1429705-1-2000-celica-toyota-gts-tein-coilovers-avid1-av06-hyperblack.jpg',
                 'https://stanceauto.co.uk/uploads/images/2020/12/image_750x_5fcf913ce5e55.jpg'
-
             ];
 
-            // Function to get a random image URL
-            function getRandomImageUrl() {
-                const randomIndex = Math.floor(Math.random() * imageUrls.length);
-                return imageUrls[randomIndex];
-            }
+            const randomIndex = Math.floor(Math.random() * imageUrls.length);
+            return imageUrls[randomIndex];
+        }
 
+        // Login
+        function login() {
+            //maakt een jsonRequestBody om de key en values in op te slaan
+            let formData = new FormData(document.querySelector("#loginForm"));
+            let JsonRequestBody = {};
+            formData.forEach((value, key) => {
+                if (key === "username") {
+                    JsonRequestBody["name"] = value;
+                } else if (key === "password") {
+                    JsonRequestBody["password"] = value;
+                }
+            });
+            // stuurt een post request naar de backend
+            fetch('http://localhost:8080/restservices/checkData', {
+                method: 'POST',
+                body: JSON.stringify(JsonRequestBody),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })  // checkt of de response.ok is.
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Something went wrong, check if ur username/password is correct');
+                    }
+                    return response.json();
+                })
+                .then(user => {
+                    // zet de gegevens van de gebruiker in de sessionstorage
+                    sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+                    // gebruiker krijgt een melding als de login succesvol is verlopen.
+                    alert("Login successful!");
+                })
+                .catch(error => {
+                    alert("Login failed: " + error.message);
+                    console.error('Fetch Error:', error);
+                });
+        }
+
+        // Logout
+        function logout() {
+            // logt de gebruiker uit door de gegevens uit de sessionstorage te verwijderen
+            sessionStorage.removeItem("loggedInUser");
+            alert("Logged out successfully!");
+        }
+
+        // Register
+        function registerUser() {
+            let formData = new FormData(document.querySelector("#registerForm"));
+            //JsonRequestBody wordt gemaakt om de data in op te slaan.
+            let JsonRequestBody = {};
+            formData.forEach((value, key) => {
+                if (key === "newUsername") {
+                    key = "name";
+                } else if (key === "newPassword") {
+                    key = "password";
+                }
+                JsonRequestBody[key] = value;
+            });
+            //stuurt een post request naar de backend
+            fetch('http://localhost:8080/restservices/register', {
+                method: 'POST',
+                body: JSON.stringify(JsonRequestBody),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }) //bekijkt of de response.ok is
+                .then(function (response) {
+                    if (!response.ok) {     //zo niet gooit hij een error terug, omdat ik de error tijdens het testen krijg bij het gebruken van verkeerde gegevens,
+                                            //heb ik er deze message aan verbonden: v
+                        throw new Error('Something went wrong, check if ur username/password is correct');
+                    }
+                    return response.json();
+                })                          //user krijgtt een alert melding dat het registreren succesvol is afgehandeld
+                .then(myJson => {
+                    alert("User registered successfully");
+                    console.log('Success response:', myJson);
+                })
+                .catch(error => {
+                    alert("Registration failed: " + error.message);
+                    console.error('Fetch Error:', error);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
             // Update the images in the gallery
             for (let i = 1; i <= 8; i++) {
                 document.getElementById(`img${i}`).src = getRandomImageUrl();
             }
-
-            function login(){
-                let formData = new FormData(document.querySelector("#loginForm"));
-                let JsonRequestBody = {};
-                formData.forEach((value, key) => { JsonRequestBody[key] = value; });
-                fetch('http://localhost:8080/restservices/authentication', {
-                    method: 'POST',
-                    body: JSON.stringify(JsonRequestBody),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (response){
-                    if (response.ok) return response.json();
-                    else throw "Wrong username/password";
-                })
-                .then(myJson => window.sessionStorage.setItem("myJWT", myJson.JWT))
-                .catch(error => console.log(error));
-            }
-
-            document.querySelector('button[type="button"]').addEventListener("click", login);
         });
     </script>
 </head>
+
 <body class="body">
     <main>
         <h1 class="title">A.B.S. Auto-body-styling</h1>
+        <!-- Navigatie -->
         <nav class="navigation">
             <a href="./index.html">Home</a>
             <a href="./selectCar.html">Select your car</a>
             <a href="./contact.html">Contact</a>
             <a href="./about-us.html">About Us</a>
             <a href="./account.html">Account</a>
+            <a href="./cart.html">Cart</a>
         </nav>
-        <h2 class="h2">Fill in the contact form:</h2>
+        <!-- Login -->
+        <h2 class="h2">Log-in:</h2>
         <form id="loginForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" autocomplete="username" required>
-            <br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" autocomplete="current-password" required>
-            <br>
-            <button type="button">Log in</button>
+            <label for="username">Name:</label><br>
+            <input type="text" id="username" name="username" autocomplete="username" required><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" autocomplete="current-password" required><br>
+            <!-- Login functie wordt getriggered door op de knop te drukken -->
+            <button type="button" onclick="login()">Log in</button>
+            <!-- Logout functie. -->
+            <button type="button" onclick="logout()">Log out</button>
         </form>
+        <!-- Register -->
+        <h2 class="h2">Register:</h2>
+        <form id="registerForm">
+            <label for="newUsername">Username:</label><br>
+            <input type="text" id="newUsername" name="newUsername" autocomplete="username" required><br>
+
+            <label for="newPassword">Password:</label><br>
+            <input type="password" id="newPassword" name="newPassword" autocomplete="new-password" required><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" autocomplete="email" required><br>
+
+            <label for="phoneNumber">Phone Number:</label><br>
+            <input type="tel" id="phoneNumber" name="phoneNumber" autocomplete="tel" required><br>
+
+            <label for="address">Address:</label><br>
+            <textarea id="address" name="address" rows="4" cols="40" required></textarea><br>
+            <!-- Register functie wordt getriggered door op de knop te drukken. -->
+            <button type="button" onclick="registerUser()">Register</button>
+        </form>
+        <!-- Gallerij -->
         <h3 class="h3">Gallery</h3>
         <section id="gallery-section">
             <div class="gallery">
@@ -130,4 +220,5 @@
         </section>
     </main>
 </body>
+
 </html>

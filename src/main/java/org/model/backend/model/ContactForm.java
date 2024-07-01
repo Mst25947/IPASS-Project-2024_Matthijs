@@ -1,12 +1,37 @@
 package org.model.backend.model;
 
-public class ContactForm {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ContactForm implements Serializable {
     private String name;
     private String email;
     private String message;
+    public static List<ContactForm> allContactForms = new ArrayList<>();
 
-    public String getName() {
-        return name;
+    public ContactForm(){
+    }
+    public ContactForm(String name, String email, String message) {
+        this.name = name;
+        this.email = email;
+        this.message = message;
+    }
+
+    public static List<ContactForm> getAllContactForms() {
+        return allContactForms;
+    }
+
+    public static void setAllContactForms(List<ContactForm> allContactForms) {
+        ContactForm.allContactForms = allContactForms;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setName(String name) {
@@ -17,15 +42,14 @@ public class ContactForm {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getName() {
+        return name;
     }
 }
+
+
+

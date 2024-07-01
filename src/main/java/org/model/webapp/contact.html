@@ -1,57 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About-us</title>
-    
-  <link rel="stylesheet" crossorigin href="/assets/Styles-QIhmFf95.css">
+    <title>Contact</title>
+  <link rel="stylesheet" crossorigin href="/assets/Styles-DcKqpubh.css">
 </head>
+
 <body class="body">
     <main>
         <h1 class="title">A.B.S. Auto-body-styling</h1>
         <nav class="navigation">
-            <a href="./index.html">Home</a> 
-            <a href="./selectCar.html">Select your car</a> 
-            <a href="./contact.html">Contact</a> 
-            <a href="./about-us.html">About Us</a> 
-            <a href="./account.html">Account</a> 
+            <a href="./index.html">Home</a>
+            <a href="./selectCar.html">Select your car</a>
+            <a href="./contact.html">Contact</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./account.html">Account</a>
+            <a href="./cart.html">Cart</a> 
         </nav>
-        <h2 class="h2">About us:</h2>
-        <p class="p1h2">Established in 2012 and based in the Netherlands, Autobody-Styling.com specializes in fiberglass mold-making and custom automotive parts. Our small team is dedicated to delivering high-quality products worldwide, from bumpers and sideskirts to splitters and diffusers. We prioritize customer satisfaction through personalized service, managing orders via direct email contact. Our commitment to craftsmanship ensures each part is meticulously crafted for durability and aesthetic excellence, reflecting our passion for automotive innovation and quality.
-        </p>
+        <h2 class="h2">Fill in the contact form:</h2>
+
+        <!-- Contact Form -->
+        <form id="contactForm">
+            <label for="name">Name:</label>
+            <br>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="email">Email:</label>
+            <br>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="message">Message:</label>
+            <br>
+            <textarea id="message" name="message" required></textarea>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+
         <h3 class="h3">Gallery</h3>
         <section id="gallery-section">
             <div class="gallery">
                 <div class="gallery-item">
-                    <img id="img1" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                    <img id="img1" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
                 </div>
                 <div class="gallery-item">
-                    <img id="img2" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                    <img id="img2" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
                 </div>
                 <div class="gallery-item">
-                    <img id="img3" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                    <img id="img3" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
                 </div>
                 <div class="gallery-item">
-                    <img id="img4" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                    <img id="img4" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
                 </div>
                 <div class="gallery-item">
-                    <img id="img5" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                    <img id="img5" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
                 </div>
                 <div class="gallery-item">
-                    <img id="img6" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                    <img id="img6" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
                 </div>
                 <div class="gallery-item">
-                    <img id="img7" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                    <img id="img7" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
                 </div>
                 <div class="gallery-item">
-                    <img id="img8" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
-                </div>  
+                    <img id="img8" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                        alt="random image">
+                </div>
             </div>
         </section>
     </main>
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const imageUrls = [
                 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                 'https://via.placeholder.com/200/0000FF',
@@ -80,7 +106,6 @@
                 'http://www.celicahobby.com/ubbthreads/attach/1953333175-whitecelicaggames.jpg',
                 'https://images.customwheeloffset.com/web-compressed/1429705-1-2000-celica-toyota-gts-tein-coilovers-avid1-av06-hyperblack.jpg',
                 'https://stanceauto.co.uk/uploads/images/2020/12/image_750x_5fcf913ce5e55.jpg'
-
             ];
 
             // Function to get a random image URL
@@ -93,7 +118,43 @@
             for (let i = 1; i <= 8; i++) {
                 document.getElementById(`img${i}`).src = getRandomImageUrl();
             }
+
+
+
+
+
+            // Handle form submission
+            document.getElementById('contactForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value
+                };
+
+                console.log(JSON.stringify(formData));
+
+                fetch('http://localhost:8080/restservices/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                }).then(data => {
+                    console.log(data);
+                    alert("Form submitted successfully!");
+                }).catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            });
         });
     </script>
 </body>
+
 </html>

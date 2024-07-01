@@ -16,6 +16,7 @@
             <a href="./contact.html">Contact</a> 
             <a href="./about-us.html">About Us</a> 
             <a href="./account.html">Account</a> 
+            <a href="./cart.html">Cart</a> 
         </nav>
         <h2 class="h2">About us:</h2>
         <p class="p1h2">Established in 2012 and based in the Netherlands, Autobody-Styling.com specializes in fiberglass mold-making and custom automotive parts. Our small team is dedicated to delivering high-quality products worldwide, from bumpers and sideskirts to splitters and diffusers. We prioritize customer satisfaction through personalized service, managing orders via direct email contact. Our commitment to craftsmanship ensures each part is meticulously crafted for durability and aesthetic excellence, reflecting our passion for automotive innovation and quality.
@@ -51,7 +52,9 @@
         </section>
     </main>
     <script type="text/javascript">
+        //DOMContentLoaded zorgt ervoor dat de JS pas werkt als het gehele HTML document is geladen en geparsed.
         document.addEventListener('DOMContentLoaded', function() {
+            //een aantal afbeelding voor in de gallerij.
             const imageUrls = [
                 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                 'https://via.placeholder.com/200/0000FF',
@@ -83,13 +86,14 @@
 
             ];
 
-            // Function to get a random image URL
+            //Dit is een functie om er voor de zorgen dat de images willekeurig zijn.
             function getRandomImageUrl() {
                 const randomIndex = Math.floor(Math.random() * imageUrls.length);
                 return imageUrls[randomIndex];
             }
 
-            // Update the images in the gallery
+            //Na iedere refresh zullen de images weer anders zijn als de vorige keer. de gallery items zijn benaamd en dus img${i}.src = getRandomImageUrl().
+            //zal er voor zorgen dat er iedere keer een andere url achter de benamen zal staan.
             for (let i = 1; i <= 8; i++) {
                 document.getElementById(`img${i}`).src = getRandomImageUrl();
             }

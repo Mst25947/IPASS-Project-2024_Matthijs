@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-  <link rel="stylesheet" crossorigin href="/assets/Styles-QIhmFf95.css">
+    <title>Toyota</title>
+  <link rel="stylesheet" crossorigin href="/assets/StylesCarSelection-OsZXcL0S.css">
 </head>
+
 <body class="body">
     <main>
         <h1 class="title">A.B.S. Auto-body-styling</h1>
         <nav class="navigation">
-            <a href="./index.html">Home</a> 
-            <a href="./selectCar.html">Select your car</a> 
-            <a href="./contact.html">Contact</a> 
-            <a href="./about-us.html">About Us</a> 
-            <a href="./account.html">Account</a> 
+            <a href="./index.html">Home</a>
+            <a href="./selectCar.html">Select your car</a>
+            <a href="./contact.html">Contact</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./account.html">Account</a>
+            <a href="./cart.html">Cart</a> 
         </nav>
-        <h2 class="h2">Welcome to Auto-body-styling.com</h2>
-        <p class="p1h2">Welcome to AutoBody-Styling.com. We specialize in manufacturing and delivering premium automotive parts, including bumpers, side skirts, spoilers, front lips, as well as aerodynamic components such as splitters and diffusers.
-
-            Orders can be placed via email contact. Upon placing an order, we will promptly reach out to you via email to confirm your address and preferred payment method. We will also provide detailed information regarding production and delivery timelines.
-            
-            Our parts are meticulously crafted in our own state-of-the-art facility, ensuring the highest quality standards. We take immense pride in our craftsmanship and prioritize excellence in every aspect of our work.
-        </p>
+        <h2 class="h2">Select your type</h2>
+        <div class="brand-selection" id="type-selection">
+            <a href="#" class="car-link" data-type="Celica T23" id="celicat23">Celica T23</a>
+            <a href="#" class="car-link" data-type="Celica ST20" id="celicast20">Celica ST20</a>
+            <a href="#" class="car-link" data-type="Celica ST18" id="celicat18">Celica ST18</a>
+            <a href="#" class="car-link" data-type="GT-86" id="gt86">GT-86</a>
+        </div>
         <h3 class="h3">Gallery</h3>
         <section id="gallery-section">
             <div class="gallery">
@@ -53,8 +56,21 @@
             </div>
         </section>
     </main>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const carLinks = document.querySelectorAll('.car-link');
+
+            carLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const carType = this.getAttribute('data-type');
+                    sessionStorage.setItem('selectedCarType', carType);
+                    window.location.href = 'categories.html';
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
             const imageUrls = [
                 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                 'https://via.placeholder.com/200/0000FF',
@@ -99,4 +115,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,40 +1,86 @@
 package org.model.backend.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class Order {
-    private int orderNumber;
-    private int customerId;
-    private Date orderDate;
-    private ArrayList<Product> orderedProducts;
-    private int totalAmount;
-
-    public Order(int orderNumber, int customerId, Date orderDate, ArrayList<Product> orderedProducts, int totalAmount) {
-        this.orderNumber = orderNumber;
-        this.customerId = customerId;
-        this.orderDate = orderDate;
-        this.orderedProducts = new ArrayList<>(orderedProducts);
-        this.totalAmount = totalAmount;
+    private String customerName;
+    private String customerEmail;
+    private int orderId;
+    private List<Product> orderedProducts;
+    private float totalPrice;
+    private static List<Order> allOrders = new ArrayList<>();
+    public Order(String name, String email, float totalPrice, List<Product> products){
     }
 
-    public int getOrderNumber() {
-        return orderNumber;
+    public Order(String customerName, String customerEmail, int orderId, List<Product> orderedProducts, float totalPrice) {
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.orderId = orderId;
+        this.orderedProducts = orderedProducts;
+        this.totalPrice = totalPrice;
+        allOrders.add(this);
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public static List<Order> getAllOrders() {
+        return allOrders;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
+    public static void setAllOrders(List<Order> allOrders) {
+        Order.allOrders = allOrders;
     }
 
-    public ArrayList<Product> getOrderedProducts() {
-        return new ArrayList<>(orderedProducts);
+    public static void addOrder(Order order) {
     }
 
-    public int getTotalAmount() {
-        return totalAmount;
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public List<Product> getOrderedProducts() {
+        return orderedProducts;
+    }
+
+    public void setOrderedProducts(List<Product> orderedProducts) {
+        this.orderedProducts = orderedProducts;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "customerName='" + customerName + '\'' +
+                ", customerEmail='" + customerEmail + '\'' +
+                ", orderId=" + orderId +
+                ", orderedProducts=" + orderedProducts +
+                ", totalPrice=" + totalPrice +
+                '}';
     }
 }

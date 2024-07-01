@@ -75,3 +75,28 @@ body {
     font-size: 25px;
     padding: 2px;
 }
+
+
+#contactForm {
+    margin-left: 420px;
+}
+
+#contactForm label {
+    color: rgb(179, 179, 179);
+}
+
+#loginForm {
+    margin-left: 420px;
+}
+
+#loginForm label {
+    color: rgb(179, 179, 179);
+}
+
+#registerForm {
+    margin-left: 420px;
+}
+
+#registerForm label {
+    color: rgb(179, 179, 179);
+}

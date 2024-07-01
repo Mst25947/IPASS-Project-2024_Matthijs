@@ -15,6 +15,7 @@
             <a href="./contact.html">Contact</a> 
             <a href="./about-us.html">About Us</a> 
             <a href="./account.html">Account</a> 
+            <a href="./cart.html">Cart</a> 
         </nav>
         <h2 class="h2">Welcome to Auto-body-styling.com</h2>
         <p class="p1h2">Welcome to AutoBody-Styling.com. We specialize in manufacturing and delivering premium automotive parts, including bumpers, side skirts, spoilers, front lips, as well as aerodynamic components such as splitters and diffusers.
@@ -54,6 +55,7 @@
         </section>
     </main>
     <script type="text/javascript">
+         //DOMContentLoaded zorgt ervoor dat de JS pas werkt als het gehele HTML document is geladen en geparsed.
         document.addEventListener('DOMContentLoaded', function() {
             const imageUrls = [
                 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
@@ -86,13 +88,14 @@
 
             ];
 
-            // Function to get a random image URL
+            //Dit is een functie om er voor de zorgen dat de images willekeurig zijn.
             function getRandomImageUrl() {
                 const randomIndex = Math.floor(Math.random() * imageUrls.length);
                 return imageUrls[randomIndex];
             }
 
-            // Update the images in the gallery
+            //Na iedere refresh zullen de images weer anders zijn als de vorige keer. de gallery items zijn benaamd en dus img${i}.src = getRandomImageUrl().
+            //zal er voor zorgen dat er iedere keer een andere url achter de benamen zal staan.
             for (let i = 1; i <= 8; i++) {
                 document.getElementById(`img${i}`).src = getRandomImageUrl();
             }

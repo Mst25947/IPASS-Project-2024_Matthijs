@@ -17,18 +17,22 @@
             <a href="./contact.html">Contact</a>
             <a href="./about-us.html">About Us</a>
             <a href="./account.html">Account</a>
+            <a href="./cart.html">Cart</a> 
         </nav>
         <h2 class="h2">Fill in the contact form:</h2>
 
         <!-- Contact Form -->
         <form id="contactForm">
             <label for="name">Name:</label>
+            <br>
             <input type="text" id="name" name="name" required>
             <br>
             <label for="email">Email:</label>
+            <br>
             <input type="email" id="email" name="email" required>
             <br>
             <label for="message">Message:</label>
+            <br>
             <textarea id="message" name="message" required></textarea>
             <br>
             <button type="submit">Submit</button>
@@ -104,21 +108,25 @@
                 'https://stanceauto.co.uk/uploads/images/2020/12/image_750x_5fcf913ce5e55.jpg'
             ];
 
-            // Function to get a random image URL
+            //wederom de random img functie
             function getRandomImageUrl() {
                 const randomIndex = Math.floor(Math.random() * imageUrls.length);
                 return imageUrls[randomIndex];
             }
 
-            // Update the images in the gallery
+            //wederom de update functie
             for (let i = 1; i <= 8; i++) {
                 document.getElementById(`img${i}`).src = getRandomImageUrl();
             }
 
-            // Handle form submission
+
+
+
+
+            // het opsturen van de contactform:
             document.getElementById('contactForm').addEventListener('submit', function (event) {
                 event.preventDefault();
-
+                //data wordt gekoppeld aan het variabele formData
                 const formData = {
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
@@ -126,7 +134,7 @@
                 };
 
                 console.log(JSON.stringify(formData));
-
+                //er qorst een post request naar de backend gestuurd
                 fetch('http://localhost:8080/restservices/submit', {
                     method: 'POST',
                     headers: {
@@ -138,6 +146,7 @@
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
                     return response.json();
+                    //console.log(s) om in de dev tools te testen of alles werkt.
                 }).then(data => {
                     console.log(data);
                     alert("Form submitted successfully!");
