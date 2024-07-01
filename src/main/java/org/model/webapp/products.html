@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+  <link rel="stylesheet" crossorigin href="/assets/products-DhrDZmwi.css">
+</head>
+
+<body>
+    <h1 class="title">A.B.S. Auto-body-styling</h1>
+    <nav class="navigation">
+        <a href="./index.html">Home</a> 
+        <a href="./selectCar.html">Select your car</a> 
+        <a href="./contact.html">Contact</a> 
+        <a href="./about-us.html">About Us</a> 
+        <a href="./account.html">Account</a> 
+        <a href="./cart.html">Cart</a> 
+    </nav>
+    <h2 id="productHeading">Products</h1>
+    <ul id="productsList"></ul>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const carModel = urlParams.get('carModel');
+            const productType = urlParams.get('productType');
+
+            // Mapping of car models and product names to image filenames
+            const productImages = {
+                "Celica ST20": {
+                    "Varis Front Bumper": "celica_st20_varis_front_bumper.jpg",
+                    "c-one Front Bumper": "celica_st20_c_one_front_bumper.jpg",
+                    "Veilside Front Bumper": "celica_st20_veilside_front_bumper.jpg",
+                    "gt-4 Front Bumper": "celica_st20_gt_4_front_bumper.jpg",
+                    "TRD Side Skirt": "celica_st20_trd_side_skirt.jpg",
+                    "TRD Spoiler": "celica_st20_trd_spoiler.jpg"
+                },
+                // Add mappings for other car models here
+            };
+
+            if (carModel && productType) {
+                fetch(`http://localhost:8080/restservices/products?carModel=${encodeURIComponent(carModel)}&productType=${encodeURIComponent(productType)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(products => {
+                        const productHeading = document.getElementById('productHeading');
+                        productHeading.textContent = `${productType.replace('_', ' ')} for ${carModel}`;
+
+                        const productsList = document.getElementById('productsList');
+                        productsList.innerHTML = '';
+
+                        products.forEach(product => {
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('product-item');
+
+                            const productImage = document.createElement('img');
+                            const imageSrc = productImages[carModel] && productImages[carModel][product.productName] ? 
+                                             `images/products/${productImages[carModel][product.productName]}` : 
+                                             'images/products/default.jpg';
+                            productImage.src = imageSrc;
+                            productImage.alt = product.productName;
+
+                            const productInfo = document.createElement('div');
+                            productInfo.classList.add('product-info');
+
+                            const productName = document.createElement('p');
+                            productName.textContent = product.productName;
+
+                            const productDescription = document.createElement('p');
+                            productDescription.textContent = product.description;
+
+                            const productPrice = document.createElement('p');
+                            productPrice.textContent = `$${product.price}`;
+
+                            const colorSelector = document.createElement('select');
+                            const primedOption = document.createElement('option');
+                            primedOption.value = 'Primed';
+                            primedOption.textContent = 'Primed';
+                            const coloredOption = document.createElement('option');
+                            coloredOption.value = 'Colored';
+                            coloredOption.textContent = 'Colored';
+                            colorSelector.appendChild(primedOption);
+                            colorSelector.appendChild(coloredOption);
+
+                            const addToCartButton = document.createElement('button');
+                            addToCartButton.textContent = 'Add to Cart';
+                            addToCartButton.addEventListener('click', function() {
+                                addToCart(product, colorSelector.value);
+                            });
+
+                            productInfo.appendChild(productName);
+                            productInfo.appendChild(productDescription);
+                            productInfo.appendChild(productPrice);
+                            productInfo.appendChild(colorSelector);
+                            productInfo.appendChild(addToCartButton);
+
+                            listItem.appendChild(productImage);
+                            listItem.appendChild(productInfo);
+
+                            productsList.appendChild(listItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching products:', error);
+                    });
+            } else {
+                console.error('Missing car model or product type in URL');
+            }
+        });
+
+        function addToCart(product, color) {
+            // Get the existing cart from localStorage or create a new array
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Add the product with the selected color to the cart
+            cart.push({
+                ...product,
+                color: color
+            });
+
+            // Save the updated cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            alert(`${product.productName} has been added to the cart.`);
+        }
+    </script>
+</body>
+
+</html>

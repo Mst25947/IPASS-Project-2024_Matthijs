@@ -1,4 +1,5 @@
 package org.model.backend.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,11 +58,13 @@ public class ShoppingCart {
         this.totalPrice = totalPrice;
     }
 
-    //Methode om de totaalprijs van de winkelwagen te berekenen.
+    //methode om ttoaal prijs te berekenen
     public float calculateTotalPrice() {
         float totalPrice = 0;
-        for (Product product : products) {
-            totalPrice += product.getPrice();
+        if (products != null) {
+            for (Product product : products) {
+                totalPrice += product.getPrice();
+            }
         }
         return totalPrice;
     }

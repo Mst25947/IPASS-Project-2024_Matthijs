@@ -111,4 +111,12 @@ public class User {
         }
         return null;
     }
+    public static User findUserByName(String name) {
+        for (User user : allUsers) {
+            if (user.getName().equals(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
 }

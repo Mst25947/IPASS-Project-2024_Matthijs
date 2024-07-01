@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="products.css">
+</head>
+
+<body>
+    <h1 class="title">A.B.S. Auto-body-styling</h1>
+    <nav class="navigation">
+        <a href="./index.html">Home</a>
+        <a href="./selectCar.html">Select your car</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./about-us.html">About Us</a>
+        <a href="./account.html">Account</a>
+        <a href="./cart.html">Cart</a>
+    </nav>
+
+    <!-- titel voor producten -->
+    <h2 id="productHeading">Products</h2>
+
+    <!-- lijst met producten -->
+    <ul id="productsList"></ul>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            //haal de model en het producttype op uit de url parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const carModel = urlParams.get('carModel');
+            const productType = urlParams.get('productType');
+
+            //het koppelen van image urls (of jpgs) en de producten
+            const productImages = {
+                "Celica ST20": {
+                    "Varis Front Bumper": "https://s1.cdn.autoevolution.com/images/news/toyota-celica-gt-four-keeps-it-1990s-classy-morphs-outrageous-bmw-screamer-182482-7.jpg",
+                    "c-one Front Bumper": "https://www.annihilatorcustoms.com/store/images/vis/Toyota/94TYCEL2DZYC-001.jpg",
+                    "Veilside Front Bumper": "https://www.japanparts.com/images/image_from_db.php?no=22461",
+                    "gt-4 Front Bumper": "https://www.motorbiscuit.com/wp-content/uploads/2022/03/Untitled-1-1.jpg",
+                    "TRD Side Skirt": "https://i.pinimg.com/originals/4d/1b/3f/4d1b3f4761516203f10751b55c2ebf14.jpg",
+                    "TRD Spoiler": "https://tse2.mm.bing.net/th?id=OIP.LwcADZk3kDdC3FKzPfShCQHaFj&pid=Api&P=0&h=180"
+                },
+            };
+
+            if (carModel && productType) {
+                //haal de producten op uit de backend gebasseerd op 2 criteria: carModel en productType
+                //voor localhost verander URL naar: http://localhost:8080/restservices/products?carModel=${encodeURIComponent(carModel)}&productType=${encodeURIComponent(productType)}
+                fetch(`https://bigshopper-1719862089609.azurewebsites.net/restservices/products?carModel=${encodeURIComponent(carModel)}&productType=${encodeURIComponent(productType)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(products => {
+                        //zet het automodel en typeonderdeel in de heading.
+                        const productHeading = document.getElementById('productHeading');
+                        productHeading.textContent = `${productType.replace('_', ' ')} for ${carModel}`;
+
+                        // Select the products list in the HTML
+                        const productsList = document.getElementById('productsList');
+                        productsList.innerHTML = '';
+
+                        // doorloop alle producten en creer een (Li) met een product-item class.
+                        products.forEach(product => {
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('product-item');
+
+                            //nieuwe img element voor iedere afbeelding
+                            const productImage = document.createElement('img');
+                            //een check om te controleren of er een specifieke afbeeldings-URL is gedefinieerd voor het huidige carModel en product.productName combinatie
+                            const imageSrc = productImages[carModel] && productImages[carModel][product.productName] ?
+                                productImages[carModel][product.productName] :
+                                'https://via.placeholder.com/200/FFFF00'; //dit is de standaard afbeelding die je ziet als er nog geen bijhorende afbeeldingen zijn toegeveogd.
+                            //koppel de gevonden of standaard afbeelding url toe het src element van het img element
+                            productImage.src = imageSrc;
+                            //stel de alt tekst in voor toegankelijkheid
+                            productImage.alt = product.productName;
+
+                            //hier wordt een div gemaakt voor de product informatie met als class product-info
+                            const productInfo = document.createElement('div');
+                            productInfo.classList.add('product-info');
+
+                            //een p aanmaken voor de product naam en de tekst instellen
+                            const productName = document.createElement('p');
+                            productName.textContent = product.productName;
+                            //een p element aanmake voor de product beschrijving en de tekst instellen
+                            const productDescription = document.createElement('p');
+                            productDescription.textContent = product.description;
+                            //een p element aanmaken voor de product prijs en een $ toevoegen als tekst.
+                            const productPrice = document.createElement('p');
+                            productPrice.textContent = `$${product.price}`;
+                            //een optie elemtn aanmaken voor de kleur "primed" en het instellen van de value en tekst
+                            const colorSelector = document.createElement('select');
+                            const primedOption = document.createElement('option');
+                            primedOption.value = 'Primed';
+                            primedOption.textContent = 'Primed';
+                            // een optie element vooor de kleur "colored" en het instellen van de value en tekst
+                            const coloredOption = document.createElement('option');
+                            coloredOption.value = 'Colored';
+                            coloredOption.textContent = 'Colored';
+                            colorSelector.appendChild(primedOption);
+                            colorSelector.appendChild(coloredOption);
+
+                            // button om artiekeln toe te voegen aan het winkelmandje
+                            const addToCartButton = document.createElement('button');
+                            addToCartButton.textContent = 'Add to Cart';
+                            addToCartButton.addEventListener('click', function () {
+                                addToCart(product, colorSelector.value);
+                            });
+
+                            //de zojuist gemaakte elementen (productnaam, beschrijving, prijs, en kleurselectie) toetoevoegen aan de div.
+                            productInfo.appendChild(productName);
+                            productInfo.appendChild(productDescription);
+                            productInfo.appendChild(productPrice);
+                            productInfo.appendChild(colorSelector);
+                            productInfo.appendChild(addToCartButton);
+
+                            //productimagelement en de productinformatiediv toevoegen aan het lijstitem
+                            listItem.appendChild(productImage);
+                            listItem.appendChild(productInfo);
+
+                            //Het voltooide lijstitem toevoegen aan de productenlijst
+                            productsList.appendChild(listItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching products:', error);
+                    });
+            } else {
+                console.error('Missing car model or product type in URL');
+            }
+        });
+
+        //producten toevoegen aan weinkelmandje logica:
+        function addToCart(product, color) {
+            //eventueel een bestaan winkelmandje ophalen of een nieuwe creeeren
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            //kleur en product + info toevoegen aan het mandje
+            cart.push({
+                ...product,
+                color: color
+            });
+
+            //winkelmandje wordt in localstorage opgeslagen
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            //een melding dat het product is toegevoeg aan het winkelmandje
+            alert(`${product.productName} has been added to the cart.`);
+        }
+    </script>
+</body>
+
+</html>

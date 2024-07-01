@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import org.model.backend.model.Order;
 import org.model.backend.model.Product;
 import org.model.backend.model.ShoppingCart;
+import org.model.backend.model.User;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -21,14 +22,17 @@ public class CartResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response saveCart(ShoppingCart cart) {
         try {
-            //Alle geinitialiseerde Product objecten in het winkelmandje worden geladen.
-            List<Product> products = cart.getProducts();
-            //Totaal prijs van alle producten bij elkaar met een methode uit klasse: "ShoppingCart".
-            float totalPrice = cart.calculateTotalPrice();
+            User user = User.findUserByName(cart.getName());
 
-            //Er wordt een nieuw Order object aangemaakt met de gegevens die vanuit de client komen: naam, eamil, producten en als laatste de -
-            //zojuist berekende totaalprijs.
-            Order order = new Order(cart.getName(), cart.getEmail(), cart.getTotalPrice(), products);
+            if (user == null) {
+                //als er geen bestaande user is gevonden, vul deze dan in met de naam gegeven tijdens het bestellen en email.
+                user = new User(cart.getName(), null, cart.getEmail(), null, null, null);
+            }
+
+            //maak een order object aan.
+            List<Product> products = cart.getProducts();
+            float totalPrice = cart.calculateTotalPrice();
+            Order order = new Order(cart.getName(), cart.getEmail(), totalPrice, products);
             Order.addOrder(order);
 
             //Winkelmandje wordt toegevoegd aan de lijst met alle andere winkelmandjes

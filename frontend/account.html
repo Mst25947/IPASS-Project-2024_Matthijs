@@ -56,7 +56,8 @@
                 }
             });
             // stuurt een post request naar de backend
-            fetch('http://localhost:8080/restservices/checkData', {
+            //voor localhost verander URL naar: http://localhost:8080/restservices/checkData
+            fetch('https://bigshopper-1719862089609.azurewebsites.net/restservices/checkData', {
                 method: 'POST',
                 body: JSON.stringify(JsonRequestBody),
                 headers: {
@@ -102,7 +103,8 @@
                 JsonRequestBody[key] = value;
             });
             //stuurt een post request naar de backend
-            fetch('http://localhost:8080/restservices/register', {
+            //voor localhost verander URL naar: http://localhost:8080/restservices/register
+            fetch('https://bigshopper-1719862089609.azurewebsites.net/restservices/register', {
                 method: 'POST',
                 body: JSON.stringify(JsonRequestBody),
                 headers: {

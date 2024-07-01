@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+  <link rel="stylesheet" crossorigin href="/assets/cart-DIpCg7MU.css">
+</head>
+
+<body>
+    <h1 class="title">A.B.S. Auto-body-styling</h1>
+    <nav class="navigation">
+        <a href="./index.html">Home</a>
+        <a href="./selectCar.html">Select your car</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./about-us.html">About Us</a>
+        <a href="./account.html">Account</a>
+        <a href="./cart.html">Cart</a>
+    </nav>
+
+    <!-- Cart items list -->
+    <ul id="cartList"></ul>
+
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <button type="button" id="placeOrder">Place order</button>
+    </form>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartList = document.getElementById('cartList');
+            cartList.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                cart.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('cart-item');
+
+                    const itemName = document.createElement('p');
+                    itemName.textContent = `${item.productName} - ${item.description} - $${item.price} - ${item.color}`;
+
+                    listItem.appendChild(itemName);
+
+                    // Create clear button
+                    const clearButton = document.createElement('button');
+                    clearButton.textContent = 'Clear';
+                    clearButton.classList.add('clear-button');
+                    clearButton.addEventListener('click', function () {
+                        // Remove item from cart and update UI
+                        const index = cart.indexOf(item);
+                        if (index !== -1) {
+                            cart.splice(index, 1);
+                            localStorage.setItem('cart', JSON.stringify(cart));
+                            updateCartUI();
+                        }
+                    });
+
+                    listItem.appendChild(clearButton);
+
+                    cartList.appendChild(listItem);
+                });
+            }
+
+            function updateCartUI() {
+                cartList.innerHTML = '';
+                if (cart.length === 0) {
+                    cartList.innerHTML = '<p>Your cart is empty.</p>';
+                } else {
+                    cart.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('cart-item');
+
+                        const itemName = document.createElement('p');
+                        itemName.textContent = `${item.productName} - ${item.description} - $${item.price} - ${item.color}`;
+
+                        listItem.appendChild(itemName);
+
+                        // Create clear button
+                        const clearButton = document.createElement('button');
+                        clearButton.textContent = 'Clear';
+                        clearButton.classList.add('clear-button');
+                        clearButton.addEventListener('click', function () {
+                            // Remove item from cart and update UI
+                            const index = cart.indexOf(item);
+                            if (index !== -1) {
+                                cart.splice(index, 1);
+                                localStorage.setItem('cart', JSON.stringify(cart));
+                                updateCartUI();
+                            }
+                        });
+
+                        listItem.appendChild(clearButton);
+
+                        cartList.appendChild(listItem);
+                    });
+                }
+            }
+
+            document.getElementById('placeOrder').addEventListener('click', function () {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+
+                const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+
+                const orderDetails = {
+                    products: cart,
+                    name: name,
+                    email: email,
+                    totalPrice: totalPrice
+                };
+
+                console.log('Sending order details:', JSON.stringify(orderDetails)); // Log the JSON payload
+
+                fetch('http://localhost:8080/restservices/cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(orderDetails)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Order placed successfully:', data);
+                        alert('Order placed successfully!');
+                        // Clear the cart in local storage
+                        localStorage.removeItem('cart');
+                        // Update the UI to reflect the empty cart
+                        updateCartUI();
+                        location.reload();
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        alert('Error placing order. Please try again.');
+                    });
+            });
+        });
+    </script>
+</body>

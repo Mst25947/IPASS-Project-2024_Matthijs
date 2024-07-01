@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="stylesheet" href="categories.css">
+</head>
+<h1 class="title">A.B.S. Auto-body-styling</h1>
+<nav class="navigation" id="nav">
+    <a href="./index.html">Home</a>
+    <a href="./selectCar.html">Select your car</a>
+    <a href="./contact.html">Contact</a>
+    <a href="./about-us.html">About Us</a>
+    <a href="./account.html">Account</a>
+    <a href="./cart.html">Cart</a> 
+</nav>
+
+<body>
+    <h2 id="carTypeHeading">Categories</h2>
+    <div id="carDetails">
+        <p id="carBrand"></p>
+    </div>
+    <ul id="categoriesList"></ul>
+
+    <script type="text/javascript">
+    //het geselecteerde autotype wordt uit de local storage gehaald.
+    document.addEventListener('DOMContentLoaded', function () {
+    const carType = sessionStorage.getItem('selectedCarType');
+    //controle of er een autotype is geselecteerd
+    if (carType) {
+        //autogegevens worden opgheaald vanuit de backend
+        //encodeURIComponent wordt gebruikt omdat ik spaties heb in bepaalde parameters, en anders zorgt dit voor problemen.
+        //encode URI component vult de empty spaces.
+        fetch(`https://bigshopper-1719862089609.azurewebsites.net/restservices/cars/${encodeURIComponent(carType)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(car => {
+                console.log('Car object:', car);  
+                //html worden geupdated met de juiste gegevens
+                document.getElementById('carTypeHeading').textContent = car.type;
+                document.getElementById('carBrand').textContent = `Brand: ${car.brand}`;
+                
+                const categoriesList = document.getElementById('categoriesList');
+                categoriesList.innerHTML = '';
+                //dmv. ene forloop wordt er geitereerd over de eigenschappen van de auto en worden de categorieren toegeveogd aan de lijst. hij zoekt bijv. naar frontBumper true.
+                //dit staat in het object gespecificeerd.
+                for (const [key, value] of Object.entries(car)) {
+                    if (typeof value === 'boolean' && value) {
+                        console.log(`Adding category: ${key}`); 
+                        //maak een listitem en link aan per categorie
+                        const listItem = document.createElement('li');
+                        const link = document.createElement('a');
+                        
+                        //creeer een url zodat de gebruiker wordt doorverwezen naar de juist product pagina die hoort bij zijn/haar gekozen automerk/autotype.
+                        const url = `products.html?carModel=${encodeURIComponent(car.type)}&productType=${encodeURIComponent(key)}`;
+                        //koppelt de url aan de href en de text aan de link
+                        link.href = url;
+                        link.textContent = key;
+                        //hier wordt de lnik aan de categorie (li) toegevoegd.
+                        listItem.appendChild(link);
+                        //en wordt het lijstitem in de categorie lijst gezet.
+                        categoriesList.appendChild(listItem);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching car details:', error);
+            });
+    } else {
+        console.error('No car type selected');
+    }
+});
+    </script>
+</body>
+
+</html>

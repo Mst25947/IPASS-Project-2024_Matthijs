@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About-us</title>
+    
+  <link rel="stylesheet" crossorigin href="/assets/Styles-Dl7CNfh-.css">
+</head>
+<body class="body">
+    <main>
+        <h1 class="title">A.B.S. Auto-body-styling</h1>
+        <nav class="navigation">
+            <a href="./index.html">Home</a> 
+            <a href="./selectCar.html">Select your car</a> 
+            <a href="./contact.html">Contact</a> 
+            <a href="./about-us.html">About Us</a> 
+            <a href="./account.html">Account</a> 
+            <a href="./cart.html">Cart</a> 
+        </nav>
+        <h2 class="h2">About us:</h2>
+        <p class="p1h2">Established in 2012 and based in the Netherlands, Autobody-Styling.com specializes in fiberglass mold-making and custom automotive parts. Our small team is dedicated to delivering high-quality products worldwide, from bumpers and sideskirts to splitters and diffusers. We prioritize customer satisfaction through personalized service, managing orders via direct email contact. Our commitment to craftsmanship ensures each part is meticulously crafted for durability and aesthetic excellence, reflecting our passion for automotive innovation and quality.
+        </p>
+        <h3 class="h3">Gallery</h3>
+        <section id="gallery-section">
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img id="img1" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>
+                <div class="gallery-item">
+                    <img id="img2" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>
+                <div class="gallery-item">
+                    <img id="img3" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>
+                <div class="gallery-item">
+                    <img id="img4" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>
+                <div class="gallery-item">
+                    <img id="img5" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>
+                <div class="gallery-item">
+                    <img id="img6" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>
+                <div class="gallery-item">
+                    <img id="img7" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>
+                <div class="gallery-item">
+                    <img id="img8" src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" alt="random image">
+                </div>  
+            </div>
+        </section>
+    </main>
+    <script type="text/javascript">
+        //DOMContentLoaded zorgt ervoor dat de JS pas werkt als het gehele HTML document is geladen en geparsed.
+        document.addEventListener('DOMContentLoaded', function() {
+            //een aantal afbeelding voor in de gallerij.
+            const imageUrls = [
+                'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
+                'https://via.placeholder.com/200/0000FF',
+                'https://via.placeholder.com/200/FF0000',
+                'https://via.placeholder.com/200/FFFF00',
+                'https://via.placeholder.com/200/00FF00',
+                'https://via.placeholder.com/200/FF00FF',
+                'https://via.placeholder.com/200/00FFFF',
+                'https://via.placeholder.com/200/000000',
+                'https://www.geilekarre.de/upload/max/1993594.jpg',
+                'https://i.pinimg.com/736x/5d/c8/3a/5dc83ab343b9ef04e7027d196dde82b0.jpg',
+                'https://www.auto-data.net/images/f110/Toyota-Celica-T20.jpg',
+                'https://pm1.narvii.com/7037/674768ff1901a720eed5e8849b1d2591e13cec67r1-1080-716v2_hq.jpg',
+                'https://i.redd.it/3oxi8z2ohv641.jpg',
+                'https://automotyw.com/wp-content/uploads/2021/11/toyota_celica_ss-iii_1-1024x757.jpg',
+                'https://pm1.narvii.com/7037/de8b4ae6f29941656be494f23f455941d42c9f55r1-1080-720v2_hq.jpg',
+                'https://i.redd.it/1xqfkj7dcsj71.jpg',
+                'https://i.pinimg.com/originals/97/db/09/97db09d3e2e67b8d981a02418ab71af4.jpg',
+                'https://cloud.leparking.fr/2021/09/21/12/05/toyota-celica-toyota-celica-t20-gt4-st205-gt-four-rhd-grau_8278743635.jpg',
+                'http://cdn.shopify.com/s/files/1/2099/6893/products/GT86R1F_1024x1024.jpg?v=1498597866',
+                'https://www.madmotors.co.uk/pub/media/catalog/product/cache/6e09dcc247d7d4abda19a8dbdd30af61/9/3/931301_10151440215553068_1031481614_n.jpg',
+                'https://protuning.com/media/cache/resolve/product_page_large_image/uploads/images/a1/lk.png',
+                'https://www.trc-tuning.com/images/product_images/original_images/trc-tuning_toyota_celica_t18_07.jpg',
+                'https://www.geilekarre.de/upload/max/2014708.jpg',
+                'https://www.trc-tuning.com/images/product_images/original_images/trc-tuning_toyota_celica_t18_08_966_4.jpg',
+                'http://www.celicahobby.com/ubbthreads/attach/1953333175-whitecelicaggames.jpg',
+                'https://images.customwheeloffset.com/web-compressed/1429705-1-2000-celica-toyota-gts-tein-coilovers-avid1-av06-hyperblack.jpg',
+                'https://stanceauto.co.uk/uploads/images/2020/12/image_750x_5fcf913ce5e55.jpg'
+
+            ];
+
+            //Dit is een functie om er voor de zorgen dat de images willekeurig zijn.
+            function getRandomImageUrl() {
+                const randomIndex = Math.floor(Math.random() * imageUrls.length);
+                return imageUrls[randomIndex];
+            }
+
+            //Na iedere refresh zullen de images weer anders zijn als de vorige keer. de gallery items zijn benaamd en dus img${i}.src = getRandomImageUrl().
+            //zal er voor zorgen dat er iedere keer een andere url achter de benamen zal staan.
+            for (let i = 1; i <= 8; i++) {
+                document.getElementById(`img${i}`).src = getRandomImageUrl();
+            }
+        });
+    </script>
+</body>
+</html>

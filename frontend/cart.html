@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="cart.css">
+</head>
+
+<body>
+    <main>
+        <h1 class="title">A.B.S. Auto-body-styling</h1>
+        <nav class="navigation">
+            <a href="./index.html">Home</a>
+            <a href="./selectCar.html">Select your car</a>
+            <a href="./contact.html">Contact</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./account.html">Account</a>
+            <a href="./cart.html">Cart</a>
+        </nav>
+
+        <!-- Cart items list -->
+        <ul id="cartList"></ul>
+
+        <form id="contactForm">
+            <label for="name">Name:</label>
+            <br>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="email">Email:</label>
+            <br>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <button type="button" id="placeOrder">Place order</button>
+        </form>
+    </main>
+
+    <script type="text/javascript">
+        //winkelmandje wordt ingeladen uit de localstorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartList = document.getElementById('cartList');
+
+            updateCartUI();
+
+            function updateCartUI() {
+                cartList.innerHTML = '';
+                if (cart.length === 0) {
+                    cartList.innerHTML = '<p>Your cart is empty.</p>';
+                } else {
+                    cart.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('cart-item');
+
+                        const itemName = document.createElement('p');
+                        itemName.textContent = `${item.productName} - ${item.description} - $${item.price} - ${item.color}`;
+
+                        listItem.appendChild(itemName);
+
+                        // een knop om de producten uit het winkelmandje te verwijderen
+                        const clearButton = document.createElement('button');
+                        clearButton.textContent = 'Remove item from cart';
+                        clearButton.classList.add('clear-button');
+                        clearButton.addEventListener('click', function () {
+                            // het winkelmandje wordt geupdatet
+                            const index = cart.indexOf(item);
+                            if (index !== -1) {
+                                cart.splice(index, 1);
+                                localStorage.setItem('cart', JSON.stringify(cart));
+                                updateCartUI();
+                            }
+                        });
+
+                        listItem.appendChild(clearButton);
+
+                        cartList.appendChild(listItem);
+                    });
+                }
+            }
+            //logica voor het plaatsen van een bestelling
+            document.getElementById('placeOrder').addEventListener('click', function () {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+
+                const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+
+                const orderDetails = {
+                    products: cart,
+                    name: name,
+                    email: email,
+                    totalPrice: totalPrice
+                };
+                //een console log om te kijken of de order compleet is
+                console.log('Sending order details:', JSON.stringify(orderDetails)); 
+                //voor local host verander URL naar: ('http://localhost:8080/restservices/cart
+                fetch('https://bigshopper-1719862089609.azurewebsites.net/restservices/cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderDetails)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Order placed successfully:', data);
+                        alert('Order placed successfully!');
+                        // winkelmandje legen door het uit de local storage te verwijderen
+                        localStorage.removeItem('cart');
+                        // winkelmandje updaten
+                        updateCartUI();
+                        location.reload();
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        alert('Error placing order. Please try again.');
+                    });
+            });
+        });
+    </script>
+</body>

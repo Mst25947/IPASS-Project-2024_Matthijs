@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+  <link rel="stylesheet" crossorigin href="/assets/catagories-BW29aZuo.css">
+</head>
+<h1 class="title">A.B.S. Auto-body-styling</h1>
+<nav class="navigation" id="nav">
+    <a href="./index.html">Home</a>
+    <a href="./selectCar.html">Select your car</a>
+    <a href="./contact.html">Contact</a>
+    <a href="./about-us.html">About Us</a>
+    <a href="./account.html">Account</a>
+    <a href="./cart.html">Cart</a> 
+</nav>
+
+<body>
+    <h2 id="carTypeHeading">Categories</h2>
+    <div id="carDetails">
+        <p id="carBrand"></p>
+    </div>
+    <ul id="categoriesList"></ul>
+
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    const carType = sessionStorage.getItem('selectedCarType');
+
+    if (carType) {
+        fetch(`http://localhost:8080/restservices/cars/${encodeURIComponent(carType)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(car => {
+                console.log('Car object:', car);  
+
+                document.getElementById('carTypeHeading').textContent = car.type;
+                document.getElementById('carBrand').textContent = `Brand: ${car.brand}`;
+
+                const categoriesList = document.getElementById('categoriesList');
+                categoriesList.innerHTML = '';
+
+                for (const [key, value] of Object.entries(car)) {
+                    if (typeof value === 'boolean' && value) {
+                        console.log(`Adding category: ${key}`); 
+                        const listItem = document.createElement('li');
+                        const link = document.createElement('a');
+                        
+                        // Construct the correct URL using template literals
+                        const url = `products.html?carModel=${encodeURIComponent(car.type)}&productType=${encodeURIComponent(key)}`;
+                        
+                        link.href = url;
+                        link.textContent = key;
+                        listItem.appendChild(link);
+                        categoriesList.appendChild(listItem);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching car details:', error);
+            });
+    } else {
+        console.error('No car type selected');
+    }
+});
+    </script>
+</body>
+
+</html>
