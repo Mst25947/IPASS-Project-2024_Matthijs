@@ -134,8 +134,10 @@
                 };
 
                 console.log(JSON.stringify(formData));
-                //er qorst een post request naar de backend gestuurd
-                fetch('http://localhost:8080/restservices/submit', {
+                //er wordt een post request naar de backend gestuurd
+                //voor local host verander URL naar: http://localhost:8080/restservices/submit
+            fetch('https://bigshopper-1719862089609.azurewebsites.net/restservices/submit', {
+                fetch('', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
